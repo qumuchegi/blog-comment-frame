@@ -4,13 +4,14 @@ import { IframeCommunication } from './lib/iframe'
 
 function BlogCommentImport({
   commentDeployUrlHost,
-  pageId
+  pageId,
+  height
 }) {
   const IFRAME_ID = 'comment-iframe' + commentDeployUrlHost + pageId
   useEffect(() => {
     IframeCommunication.init(
       (evt) => {
-        document.getElementById(IFRAME_ID).style.height = Number(evt.srcElement.outerHeight) + 70 + 'px'
+        //document.getElementById(IFRAME_ID).style.height = Number(evt.srcElement.outerHeight) + 70 + 'px'
       }
     )
     const PARENT_GITHUB_AUTH_MSG_START = 'PARENT_GITHUB_AUTH_MSG_START'
@@ -39,6 +40,7 @@ function BlogCommentImport({
         style={{
           width: '100%',
           border: '0px',
+          height: height + 'px',
           scrollbarWidth: 'none',
           paddingBottom: '30px'
         }}

@@ -1,4 +1,4 @@
-# blog comment import
+# blog comment frame
 
 这个包用于在网页中引入 <a href='https://github.com/qumuchegi/blog-comment'>
 <img src='https://img.shields.io/badge/blog__comment-0.1.0-red'/>
@@ -8,7 +8,7 @@
 
 ## 使用
 
-先部署 (blog_comment)[https://github.com/qumuchegi/blog-comment]，按照(use)[https://github.com/qumuchegi/blog-comment#use] 的几个步骤即可在你的文章里面引入评论组件
+先部署 [blog_comment](https://github.com/qumuchegi/blog-comment)，按照 [#use](https://github.com/qumuchegi/blog-comment#use) 的几个步骤即可在你的文章里面引入评论组件
 
 安装：
 ```shell
@@ -28,12 +28,14 @@ import BlogCommentImport from 'blog_comment_import_npm'
   <BlogCommentImport
     commentDeployUrlHost={'http://xxxx.vercel.app'}
     pageId={params.articleId}
+    height={300}
   />
 ```
 
 ### props：
 
-| props | 描述 |
-| :--: | :-: |
-| commentDeployUrlHost | blog_comment 部署到 vercel 的上线地址|
-| pageId | 网页 id，评论数据将会以这个 pageId 作为索引存储，因此每一个引入 BlogCommentImport 的地方 pageId 都应该是唯一的|
+| props | 描述 | required |
+| :--: | :-: | :-: |
+| commentDeployUrlHost | blog_comment 部署到 vercel 的上线地址| 是 |
+| pageId | 网页 id，评论数据将会以这个 pageId 作为索引存储，因此每一个引入 BlogCommentImport 的地方 pageId 都应该是唯一的| 是 |
+| height | 指定评论组件的高度 | 是 |
