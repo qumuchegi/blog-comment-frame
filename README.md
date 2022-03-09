@@ -8,6 +8,8 @@
 
 ## 使用
 
+先部署 (blog_comment)[https://github.com/qumuchegi/blog-comment]，按照[use](https://github.com/qumuchegi/blog-comment#use) 的几个步骤即可在你的文章里面引入评论组件
+
 安装：
 ```shell
 yarn add blog_comment_import_npm
