@@ -1,14 +1,37 @@
 # blog comment import
 
-这个包用于在网页中引入 [blog_comment](https://github.com/qumuchegi/blog-comment), blog_comment 是一个开箱即用的 评论组件，适合嵌入个人博客页面，提供文章的评论功能
+这个包用于在网页中引入 <a href='https://github.com/qumuchegi/blog-comment'>
+<img src='https://img.shields.io/badge/blog__comment-0.1.0-red'/>
+</a>, blog_comment 是一个开箱即用的 评论组件，适合嵌入个人博客页面，提供文章的评论功能
+
+
 
 ## 使用
 
-```js
+安装：
+```shell
+yarn add blog_comment_import_npm
 
-  <BlogCommentImport
-    commentDeployUrlHost={'http://localhost:3000'}
-    pageId={params.articleId}
-  />
+// or
+
+npm i blog_comment_import_npm
 
 ```
+
+引入组件：
+
+```js
+import BlogCommentImport from 'blog_comment_import_npm'
+
+  <BlogCommentImport
+    commentDeployUrlHost={'http://xxxx.vercel.app'}
+    pageId={params.articleId}
+  />
+```
+
+### props：
+
+| props | 描述 |
+| :--: | :-: |
+| commentDeployUrlHost | blog_comment 部署到 vercel 的上线地址|
+| pageId | 网页 id，评论数据将会以这个 pageId 作为索引存储，因此每一个引入 BlogCommentImport 的地方 pageId 都应该是唯一的|
