@@ -76,6 +76,7 @@ function BlogCommentFrame({
         style={{
           width: '100%',
           border: '0px',
+          minHeight: '500px',
           scrollbarWidth: 'none',
           paddingBottom: '30px'
         }}
