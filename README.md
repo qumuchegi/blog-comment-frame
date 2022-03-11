@@ -37,5 +37,5 @@ import BlogCommentFrame from 'blog_comment_frame'
 | :--: | :-: | :-: |
 | commentDeployUrlHost | blog_comment 部署到 vercel 的上线地址| 是 |
 | pageId | 网页 id，评论数据将会以这个 pageId 作为索引存储，因此每一个引入 BlogCommentImport 的地方 pageId 都应该是唯一的| 是 |
-| githubAuthClientId | github OAuth application client id |
+| githubAuthClientId | github OAuth application client id | 是 |
 
