@@ -12,7 +12,6 @@ function BlogCommentFrame({
     IframeCommunication.init(
       (evt) => {
         onIframeLoaded()
-        document.getElementById(IFRAME_ID).style.height = Number(evt.srcElement.outerHeight) + 100 + 'px'
       }
     )
     const PARENT_GITHUB_AUTH_MSG_START = 'PARENT_GITHUB_AUTH_MSG_START'
@@ -29,6 +28,16 @@ function BlogCommentFrame({
             `&redirect_uri=${`${commentDeployUrlHost}/api/githubLoginCallback?redirect_url=` + encodeURIComponent(callbackUrl || window.location.href)}`
           )
         window.location.href = url
+      }
+    )
+  }, [])
+
+  useEffect(() => {
+    IframeCommunication.listenIframe(
+      'send_iframe_height',
+      (evt, data) => {
+        console.log({evt, data});
+        document.getElementById(IFRAME_ID).style.height = Number(data.height) + 50 + 'px'
       }
     )
   }, [])
@@ -63,7 +72,6 @@ function BlogCommentFrame({
     <div className="App">
       <iframe
         src={`${commentDeployUrlHost}/?articleId=${pageId}`}
-        // onLoad={onIframeLoaded}
         id={IFRAME_ID}
         style={{
           width: '100%',
