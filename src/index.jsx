@@ -5,6 +5,7 @@ import { entriesToObj } from './lib/object'
 
 function BlogCommentFrame({
   commentDeployUrlHost,
+  githubAuthClientId,
   pageId
 }) {
   const IFRAME_ID = 'comment-iframe' + commentDeployUrlHost + pageId
@@ -18,14 +19,9 @@ function BlogCommentFrame({
     IframeCommunication.listenIframe(
       PARENT_GITHUB_AUTH_MSG_START,
       (evt, data) => {
-        const {
-          github_auth_clientid,
-          commentDeployUrlHost,
-          callbackUrl
-        } = data
-        const url = `https://github.com/login/oauth/authorize?client_id=${github_auth_clientid}`
+        const url = `https://github.com/login/oauth/authorize?client_id=${githubAuthClientId}`
           + (
-            `&redirect_uri=${`${commentDeployUrlHost}/api/githubLoginCallback?redirect_url=` + encodeURIComponent(callbackUrl || window.location.href)}`
+            `&redirect_uri=${`${commentDeployUrlHost}/api/githubLoginCallback?redirect_url=` + encodeURIComponent(window.location.href)}`
           )
         window.location.href = url
       }
