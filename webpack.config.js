@@ -31,5 +31,8 @@ module.exports = {
     plugins:[
         new CleanWebpackPlugin()
     ],
-    externals:[/^(react|babel-runtime)/]
+    externals:[/^(react|babel-runtime)/, {
+        react: 'react',
+        'react-dom': 'react-dom'
+    }]
 }

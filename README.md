@@ -12,23 +12,22 @@
 
 安装：
 ```shell
-yarn add blog_comment_import_npm
+yarn add blog_comment_frame
 
 // or
 
-npm i blog_comment_import_npm
+npm i blog_comment_frame
 
 ```
 
 引入组件：
 
 ```js
-import BlogCommentImport from 'blog_comment_import_npm'
+import BlogCommentFrame from 'blog_comment_frame'
 
-  <BlogCommentImport
+  <BlogCommentFrame
     commentDeployUrlHost={'http://xxxx.vercel.app'}
     pageId={params.articleId}
-    height={300}
   />
 ```
 
@@ -38,4 +37,4 @@ import BlogCommentImport from 'blog_comment_import_npm'
 | :--: | :-: | :-: |
 | commentDeployUrlHost | blog_comment 部署到 vercel 的上线地址| 是 |
 | pageId | 网页 id，评论数据将会以这个 pageId 作为索引存储，因此每一个引入 BlogCommentImport 的地方 pageId 都应该是唯一的| 是 |
-| height | 指定评论组件的高度 | 是 |
+
