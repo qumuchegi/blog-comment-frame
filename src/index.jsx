@@ -65,7 +65,7 @@ function BlogCommentFrame({
   const onIframeLoaded = useCallback(
     () => {
       const maybeCookie = readCookie()
-      if (maybeCookie) {
+      if (maybeCookie.userHomeUrl) {
         const {
           userHomeUrl,
           auth_username,
@@ -88,13 +88,13 @@ function BlogCommentFrame({
           auth_token,
           github_userid
         } = entriesToObj(document.location.search.slice(1), '&')
-        removeSearch(([
+        removeSearch([
           'userHomeUrl',
           'auth_username',
           'auth_avatar',
           'auth_token',
           'github_userid'
-        ]))
+        ])
         appendCookie([
           {
             key: 'userHomeUrl',
@@ -126,7 +126,7 @@ function BlogCommentFrame({
         )
       }
     },
-    []
+    [sendGithubAuthInfo]
   )
 
   return (
