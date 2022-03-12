@@ -2,6 +2,8 @@
 import React, { useEffect, useCallback } from 'react'
 import { IframeCommunication } from './lib/iframe'
 import { entriesToObj } from './lib/object'
+import { removeSearch } from './lib/location'
+import { appendCookie, readCookie } from './lib/cookie'
 
 function BlogCommentFrame({
   commentDeployUrlHost,
@@ -38,28 +40,91 @@ function BlogCommentFrame({
     )
   }, [])
 
+  const sendGithubAuthInfo = useCallback((
+    userHomeUrl,
+    auth_username,
+    auth_avatar,
+    auth_token,
+    github_userid
+  ) => {
+    document.getElementById(IFRAME_ID).contentWindow.postMessage(
+      JSON.stringify({
+        msg: 'forward-github-auth-info',
+        data: {
+          userHomeUrl,
+          auth_username,
+          auth_avatar,
+          auth_token,
+          github_userid
+        }
+      }),
+      '*'
+    )
+  }, [])
+
   const onIframeLoaded = useCallback(
     () => {
-      const {
-        userHomeUrl,
-        auth_username,
-        auth_avatar,
-        auth_token,
-        github_userid
-      } = entriesToObj(document.location.search.slice(1), '&')
-      document.getElementById(IFRAME_ID).contentWindow.postMessage(
-        JSON.stringify({
-          msg: 'forward-github-auth-info',
-          data: {
-            userHomeUrl,
-            auth_username,
-            auth_avatar,
-            auth_token,
-            github_userid
+      const maybeCookie = readCookie()
+      if (maybeCookie) {
+        const {
+          userHomeUrl,
+          auth_username,
+          auth_avatar,
+          auth_token,
+          github_userid
+        } = maybeCookie
+        sendGithubAuthInfo(
+          userHomeUrl,
+          auth_username,
+          auth_avatar,
+          auth_token,
+          github_userid
+        )
+      } else {
+        const {
+          userHomeUrl,
+          auth_username,
+          auth_avatar,
+          auth_token,
+          github_userid
+        } = entriesToObj(document.location.search.slice(1), '&')
+        removeSearch(([
+          'userHomeUrl',
+          'auth_username',
+          'auth_avatar',
+          'auth_token',
+          'github_userid'
+        ]))
+        appendCookie([
+          {
+            key: 'userHomeUrl',
+            value: userHomeUrl
+          },
+          {
+            key: 'auth_username',
+            value: auth_username
+          },
+          {
+            key: 'auth_avatar',
+            value: auth_avatar
+          },
+          {
+            key: 'auth_token',
+            value: auth_token
+          },
+          {
+            key: 'github_userid',
+            value: github_userid
           }
-        }),
-        '*'
-      )
+        ])
+        sendGithubAuthInfo(
+          userHomeUrl,
+          auth_username,
+          auth_avatar,
+          auth_token,
+          github_userid
+        )
+      }
     },
     []
   )
