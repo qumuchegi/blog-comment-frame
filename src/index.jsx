@@ -34,7 +34,7 @@ function BlogCommentFrame({
     IframeCommunication.listenIframe(
       'send_iframe_height',
       (evt, data) => {
-        console.log({evt, data});
+        // console.log({evt, data});
         document.getElementById(IFRAME_ID).style.height = Number(data.height) + 50 + 'px'
       }
     )
@@ -65,6 +65,9 @@ function BlogCommentFrame({
   const onIframeLoaded = useCallback(
     () => {
       const maybeCookie = readCookie()
+      // console.log({
+      //   maybeCookie
+      // });
       if (maybeCookie.userHomeUrl) {
         const {
           userHomeUrl,
@@ -88,13 +91,6 @@ function BlogCommentFrame({
           auth_token,
           github_userid
         } = entriesToObj(document.location.search.slice(1), '&')
-        removeSearch([
-          'userHomeUrl',
-          'auth_username',
-          'auth_avatar',
-          'auth_token',
-          'github_userid'
-        ])
         appendCookie([
           {
             key: 'userHomeUrl',
@@ -117,6 +113,15 @@ function BlogCommentFrame({
             value: github_userid
           }
         ])
+        // if (userHomeUrl) {
+        //   removeSearch([
+        //     'userHomeUrl',
+        //     'auth_username',
+        //     'auth_avatar',
+        //     'auth_token',
+        //     'github_userid'
+        //   ])
+        // }
         sendGithubAuthInfo(
           userHomeUrl,
           auth_username,
