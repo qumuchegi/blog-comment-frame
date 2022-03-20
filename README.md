@@ -27,7 +27,7 @@ import BlogCommentFrame from 'blog_comment_frame'
 
   <BlogCommentFrame
     commentDeployHost={'http://xxxx.vercel.app'}
-    pageId={params.articleId}
+    pageId={'xxxx'}
     auth={['github', 'anonymous']}
   />
 ```
@@ -40,7 +40,7 @@ import { BlogCommentShell } from 'blog_comment_frame'
 BlogCommentShell({
   containerId: 'blog-comment-parent-container',
   commentDeployHost: 'http://xxxx.vercel.app',
-  pageId: params.articleId,
+  pageId: 'xxxx',
   auth: ['github', 'anonymous']
 })
 
@@ -55,7 +55,7 @@ BlogCommentShell({
 | :--: | :-: | :-: |
 | commentDeployHost | blog_comment 部署到 vercel 的上线地址| 是 |
 | pageId | 网页 id，评论数据将会以这个 pageId 作为索引存储，因此每一个引入 BlogCommentImport 的地方 pageId 都应该是唯一的| 是 |
-| auth | 数组，用于配置评论者的身份，默认评论者匿名身份参与评论，如果需要 GitHub 授权，可以加上 'github' | 否 |
+| auth | 数组，用于配置评论者的身份，默认评论者匿名身份参与评论 ['anonymous']，如果需要 GitHub 授权，可以加上 'github', ['anonymous', 'github'] | 否 |
 
 </details>
 
@@ -66,7 +66,7 @@ BlogCommentShell({
 | :--: | :-: | :-: |
 | commentDeployHost | blog_comment 部署到 vercel 的上线地址| 是 |
 | pageId | 网页 id，评论数据将会以这个 pageId 作为索引存储，因此每一个引入 BlogCommentImport 的地方 pageId 都应该是唯一的| 是 |
-| auth | 数组，用于配置评论者的身份，默认评论者匿名身份参与评论，如果需要 GitHub 授权，可以加上 'github' | 否 |
+| auth | 数组，用于配置评论者的身份，默认评论者匿名身份参与评论 ['anonymous']，如果需要 GitHub 授权，可以加上 'github', ['anonymous', 'github'] | 否 |
 | containerId | Blog Comment 评论组件被挂载的 document 节点 id | 是 |
 </details>
 
