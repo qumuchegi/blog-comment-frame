@@ -20,7 +20,7 @@ npm i blog_comment_frame
 
 ```
 
-引入组件：
+在 React 项目中引入组件：
 
 ```js
 import BlogCommentFrame from 'blog_comment_frame'
@@ -28,15 +28,50 @@ import BlogCommentFrame from 'blog_comment_frame'
   <BlogCommentFrame
     commentDeployUrlHost={'http://xxxx.vercel.app'}
     pageId={params.articleId}
-    githubAuthClientId={'xxxxxxx'}
+    auth={['github', 'anonymous']}
   />
 ```
 
+框架无关的引入组件：
+
+```js
+import { BlogCommentShell } from '@/utils/BlogCommentFrame'
+
+BlogCommentShell({
+  containerId: 'blog-comment-parent-container',
+  commentDeployHost: 'http://xxxx.vercel.app',
+  pageId: params.articleId,
+  auth: ['github', 'anonymous']
+})
+
+```
+
 ### props：
+
+<details>
+  <summary>BlogCommentFrame</summary>
 
 | props | 描述 | required |
 | :--: | :-: | :-: |
 | commentDeployUrlHost | blog_comment 部署到 vercel 的上线地址| 是 |
 | pageId | 网页 id，评论数据将会以这个 pageId 作为索引存储，因此每一个引入 BlogCommentImport 的地方 pageId 都应该是唯一的| 是 |
-| githubAuthClientId | github OAuth application client id | 是 |
+| auth | 数组，用于配置评论者的身份，默认评论者匿名身份参与评论，如果需要 GitHub 授权，可以加上 'github' | 否 |
+
+</details>
+
+<details>
+  <summary>BlogCommentShell</summary>
+
+| props | 描述 | required |
+| :--: | :-: | :-: |
+| commentDeployUrlHost | blog_comment 部署到 vercel 的上线地址| 是 |
+| pageId | 网页 id，评论数据将会以这个 pageId 作为索引存储，因此每一个引入 BlogCommentImport 的地方 pageId 都应该是唯一的| 是 |
+| auth | 数组，用于配置评论者的身份，默认评论者匿名身份参与评论，如果需要 GitHub 授权，可以加上 'github' | 否 |
+| containerId | Blog Comment 评论组件被挂载的 document 节点 id | 是 |
+</details>
+
+
+
+
+
 

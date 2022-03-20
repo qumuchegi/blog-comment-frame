@@ -7,13 +7,13 @@ const INIT_IFRAME_MSG = 'iframe_init_msg'
 
 const init = (successCb) => {
   // 接受 iframe 的信息
-  listenIframe(INIT_IFRAME_MSG, (evt) => {
+  listenIframe(INIT_IFRAME_MSG, (evt, _data) => {
     const {
       data,
       origin,
       source: iframeSource
     } = evt
-    successCb(evt)
+    successCb(evt, _data)
     iframeWindow = iframeSource
     iframeOrigin = origin
   })
