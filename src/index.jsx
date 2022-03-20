@@ -280,12 +280,8 @@ export const BlogCommentShell = ({
   `
   iframe.frameBorder = 0
 
-  const observer = new MutationObserver(() => {
+  const mountCommentIframeAndAddListener = () => {
     const container = document.getElementById(containerId)
-    console.log({
-      containerId,
-      container
-    });
     if (!container) return
     container && container.appendChild(iframe)
 
@@ -303,13 +299,27 @@ export const BlogCommentShell = ({
         document.getElementById(IFRAME_ID).style.height = Number(data.height) + 50 + 'px'
       }
     )
+  }
+  const observer = new MutationObserver(() => {
+    mountCommentIframeAndAddListener()
     observer.disconnect()
   })
 
   observer.observe(document.body, {
     childList: true,
-    subtree: true
+    subtree: true,
+    characterData: true,
   })
 
+  window.addEventListener('popstate', function(e) {
+    mountCommentIframeAndAddListener()
+  })
+
+  window.addEventListener('pushstate', function(e) {
+    mountCommentIframeAndAddListener()
+  })
+  window.addEventListener('replacestate', function(e) {
+    mountCommentIframeAndAddListener()
+  })
 }
 
