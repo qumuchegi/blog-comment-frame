@@ -13,11 +13,11 @@
 安装：
 ```shell
 yarn add blog_comment_frame
+```
 
-// or
-
+或者
+```shell
 npm i blog_comment_frame
-
 ```
 
 在 React 项目中引入组件：
@@ -26,7 +26,7 @@ npm i blog_comment_frame
 import BlogCommentFrame from 'blog_comment_frame'
 
   <BlogCommentFrame
-    commentDeployUrlHost={'http://xxxx.vercel.app'}
+    commentDeployHost={'http://xxxx.vercel.app'}
     pageId={params.articleId}
     auth={['github', 'anonymous']}
   />
@@ -35,7 +35,7 @@ import BlogCommentFrame from 'blog_comment_frame'
 框架无关的引入组件：
 
 ```js
-import { BlogCommentShell } from '@/utils/BlogCommentFrame'
+import { BlogCommentShell } from 'blog_comment_frame'
 
 BlogCommentShell({
   containerId: 'blog-comment-parent-container',
@@ -53,7 +53,7 @@ BlogCommentShell({
 
 | props | 描述 | required |
 | :--: | :-: | :-: |
-| commentDeployUrlHost | blog_comment 部署到 vercel 的上线地址| 是 |
+| commentDeployHost | blog_comment 部署到 vercel 的上线地址| 是 |
 | pageId | 网页 id，评论数据将会以这个 pageId 作为索引存储，因此每一个引入 BlogCommentImport 的地方 pageId 都应该是唯一的| 是 |
 | auth | 数组，用于配置评论者的身份，默认评论者匿名身份参与评论，如果需要 GitHub 授权，可以加上 'github' | 否 |
 
@@ -64,7 +64,7 @@ BlogCommentShell({
 
 | props | 描述 | required |
 | :--: | :-: | :-: |
-| commentDeployUrlHost | blog_comment 部署到 vercel 的上线地址| 是 |
+| commentDeployHost | blog_comment 部署到 vercel 的上线地址| 是 |
 | pageId | 网页 id，评论数据将会以这个 pageId 作为索引存储，因此每一个引入 BlogCommentImport 的地方 pageId 都应该是唯一的| 是 |
 | auth | 数组，用于配置评论者的身份，默认评论者匿名身份参与评论，如果需要 GitHub 授权，可以加上 'github' | 否 |
 | containerId | Blog Comment 评论组件被挂载的 document 节点 id | 是 |
