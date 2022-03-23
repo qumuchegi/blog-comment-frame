@@ -140,7 +140,7 @@ function BlogCommentFrame({
   return (
     <div className="App">
       <iframe
-        src={`${commentDeployHost}/?articleId=${pageId}&auth=${auth}`}
+        src={`${commentDeployHost}/?articleId=${pageId}&auth=${auth}&parentHref=${window.location.href}`}
         id={IFRAME_ID}
         style={{
           width: '100%',
