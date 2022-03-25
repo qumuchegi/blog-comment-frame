@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback } from 'react'
-import { IframeCommunication } from './iframe'
+import { IframeCommunication } from './lib/iframe'
 
 function BlogCommentFrame({
   commentDeployHost,
