@@ -1,8 +1,5 @@
-
 import React, { useEffect, useCallback } from 'react'
-import { IframeCommunication } from './lib/iframe'
-import { entriesToObj } from './lib/object'
-import { appendCookie, readCookie } from './lib/cookie'
+import { IframeCommunication } from './iframe'
 
 function BlogCommentFrame({
   commentDeployHost,
@@ -10,26 +7,10 @@ function BlogCommentFrame({
   auth = ['anonymous'] // 'github', 'anonymous'
 }) {
   const IFRAME_ID = 'comment-iframe' + commentDeployHost + pageId
-  const bindGithubAuthRedirectListener = useCallback((githubAuthClientId) => {
-    const PARENT_GITHUB_AUTH_MSG_START = 'PARENT_GITHUB_AUTH_MSG_START'
-    IframeCommunication.listenIframe(
-      PARENT_GITHUB_AUTH_MSG_START,
-      (evt, data) => {
-        const url = `https://github.com/login/oauth/authorize?client_id=${githubAuthClientId}`
-          + (
-            `&redirect_uri=${`${commentDeployHost}/api/githubLoginCallback?redirect_url=` + encodeURIComponent(window.location.href)}`
-          )
-        window.location.href = url
-      }
-    )
-  }, [])
+
   useEffect(() => {
     IframeCommunication.init(
-      (evt, data) => {
-        onIframeLoaded()
-        console.log({evt, data});
-        bindGithubAuthRedirectListener(data.githubAuthClientId)
-      }
+      (evt, data) => {}
     )
   }, [])
 
@@ -42,100 +23,6 @@ function BlogCommentFrame({
       }
     )
   }, [])
-
-  const sendGithubAuthInfo = useCallback((
-    userHomeUrl,
-    auth_username,
-    auth_avatar,
-    auth_token,
-    github_userid
-  ) => {
-    document.getElementById(IFRAME_ID).contentWindow.postMessage(
-      JSON.stringify({
-        msg: 'forward-github-auth-info',
-        data: {
-          userHomeUrl,
-          auth_username,
-          auth_avatar,
-          auth_token,
-          github_userid
-        }
-      }),
-      '*'
-    )
-  }, [])
-
-  const onIframeLoaded = useCallback(
-    () => {
-      const maybeCookie = readCookie()
-      // console.log({
-      //   maybeCookie
-      // });
-      if (maybeCookie.userHomeUrl) {
-        const {
-          userHomeUrl,
-          auth_username,
-          auth_avatar,
-          auth_token,
-          github_userid
-        } = maybeCookie
-        sendGithubAuthInfo(
-          userHomeUrl,
-          auth_username,
-          auth_avatar,
-          auth_token,
-          github_userid
-        )
-      } else {
-        const {
-          userHomeUrl,
-          auth_username,
-          auth_avatar,
-          auth_token,
-          github_userid
-        } = entriesToObj(document.location.search.slice(1), '&')
-        appendCookie([
-          {
-            key: 'userHomeUrl',
-            value: userHomeUrl
-          },
-          {
-            key: 'auth_username',
-            value: auth_username
-          },
-          {
-            key: 'auth_avatar',
-            value: auth_avatar
-          },
-          {
-            key: 'auth_token',
-            value: auth_token
-          },
-          {
-            key: 'github_userid',
-            value: github_userid
-          }
-        ])
-        // if (userHomeUrl) {
-        //   removeSearch([
-        //     'userHomeUrl',
-        //     'auth_username',
-        //     'auth_avatar',
-        //     'auth_token',
-        //     'github_userid'
-        //   ])
-        // }
-        sendGithubAuthInfo(
-          userHomeUrl,
-          auth_username,
-          auth_avatar,
-          auth_token,
-          github_userid
-        )
-      }
-    },
-    [sendGithubAuthInfo]
-  )
 
   return (
     <div className="App">
@@ -164,112 +51,9 @@ export const BlogCommentShell = ({
   auth = ['anonymous'] // 'github', 'anonymous'
 }) => {
   const IFRAME_ID = 'comment-iframe' + commentDeployHost + pageId
-  const bindGithubAuthRedirectListener = (githubAuthClientId) => {
-    const PARENT_GITHUB_AUTH_MSG_START = 'PARENT_GITHUB_AUTH_MSG_START'
-    IframeCommunication.listenIframe(
-      PARENT_GITHUB_AUTH_MSG_START,
-      (evt, data) => {
-        console.log('发起 GitHub 登录', data);
-        const url = `https://github.com/login/oauth/authorize?client_id=${githubAuthClientId}`
-          + (
-            `&redirect_uri=${`${commentDeployHost}/api/githubLoginCallback?redirect_url=` + encodeURIComponent(window.location.href)}`
-          )
-        window.location.href = url
-      }
-    )
-  }
-  const sendGithubAuthInfo = (
-    userHomeUrl,
-    auth_username,
-    auth_avatar,
-    auth_token,
-    github_userid
-  ) => {
-    document.getElementById(IFRAME_ID).contentWindow.postMessage(
-      JSON.stringify({
-        msg: 'forward-github-auth-info',
-        data: {
-          userHomeUrl,
-          auth_username,
-          auth_avatar,
-          auth_token,
-          github_userid
-        }
-      }),
-      '*'
-    )
-  }
-  const onIframeLoaded = () => {
-    const maybeCookie = readCookie()
-    // console.log({
-    //   maybeCookie
-    // });
-    if (maybeCookie.userHomeUrl) {
-      const {
-        userHomeUrl,
-        auth_username,
-        auth_avatar,
-        auth_token,
-        github_userid
-      } = maybeCookie
-      sendGithubAuthInfo(
-        userHomeUrl,
-        auth_username,
-        auth_avatar,
-        auth_token,
-        github_userid
-      )
-    } else {
-      const {
-        userHomeUrl,
-        auth_username,
-        auth_avatar,
-        auth_token,
-        github_userid
-      } = entriesToObj(document.location.search.slice(1), '&')
-      appendCookie([
-        {
-          key: 'userHomeUrl',
-          value: userHomeUrl
-        },
-        {
-          key: 'auth_username',
-          value: auth_username
-        },
-        {
-          key: 'auth_avatar',
-          value: auth_avatar
-        },
-        {
-          key: 'auth_token',
-          value: auth_token
-        },
-        {
-          key: 'github_userid',
-          value: github_userid
-        }
-      ])
-      // if (userHomeUrl) {
-      //   removeSearch([
-      //     'userHomeUrl',
-      //     'auth_username',
-      //     'auth_avatar',
-      //     'auth_token',
-      //     'github_userid'
-      //   ])
-      // }
-      sendGithubAuthInfo(
-        userHomeUrl,
-        auth_username,
-        auth_avatar,
-        auth_token,
-        github_userid
-      )
-    }
-  }
 
   const iframe = document.createElement('iframe')
-  iframe.src = `${commentDeployHost}/?articleId=${pageId}&auth=${auth}`
+  iframe.src = `${commentDeployHost}/?articleId=${pageId}&auth=${auth}&parentHref=${window.location.href}` //`${commentDeployHost}/?articleId=${pageId}&auth=${auth}`
   iframe.id = IFRAME_ID
   iframe.style = `
     width: 100%;
@@ -286,11 +70,7 @@ export const BlogCommentShell = ({
     container && container.appendChild(iframe)
 
     IframeCommunication.init(
-      (evt, data) => {
-        onIframeLoaded()
-        // console.log({evt, data});
-        bindGithubAuthRedirectListener(data.githubAuthClientId)
-      }
+      (evt, data) => {}
     )
     IframeCommunication.listenIframe(
       'send_iframe_height',
@@ -322,4 +102,3 @@ export const BlogCommentShell = ({
     mountCommentIframeAndAddListener()
   })
 }
-
